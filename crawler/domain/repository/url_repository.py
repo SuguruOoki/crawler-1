@@ -21,7 +21,7 @@ class UrlRepository(abc.ABC):
         raise NotImplementedError("infrastructureパッケージで実装してください")
 
     @abc.abstractmethod
-    def get(self, timedelta: datetime.timedelta) -> URL:
+    def get(self) -> URL:
         """
         クロールすべきURLを一件取得します。
 
@@ -34,11 +34,11 @@ class UrlRepository(abc.ABC):
         raise NotImplementedError("infrastructureパッケージで実装してください")
 
     @abc.abstractmethod
-    def save(self, url_set: URLSet) -> None:
+    def save(self, url: URL) -> None:
         """
-        URLのセットを保存します。
+        URLを保存します。
 
-        :param url_set:
+        :param url:
         :return: None
         """
         raise NotImplementedError("infrastructureパッケージで実装してください")

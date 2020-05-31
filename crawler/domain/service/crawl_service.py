@@ -24,8 +24,8 @@ class CrawlService:
             return
 
         page = self.web_service.fetch(url)
+        self.url_repository.save(url)
         urls = page.get_urls()
-        self.url_repository.save(urls)
 
         for other_url in urls.set:
             self.recursive_crawl(other_url, i + 1, depth)
