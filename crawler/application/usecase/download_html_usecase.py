@@ -28,7 +28,7 @@ class DownloadHtmlUsecase:
             page = self.web_service.fetch(url)
 
             if self._should_save(page):
-                print("保存中 {} ...".format(page.url))
+                print("ページを保存中 {} ...".format(page.url))
                 self.page_repository.save(page)
                 print("保存完了")
 

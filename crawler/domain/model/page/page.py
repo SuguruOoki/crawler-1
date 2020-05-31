@@ -6,7 +6,7 @@ from .http_status import HttpStatus
 from ..url import URL, URLSet
 
 
-@dataclass
+@dataclass(unsafe_hash=True)
 class Page:
     url: URL
     html: Html
@@ -22,7 +22,8 @@ class Page:
         
         :return: bool
         """
-        raise NotImplementedError("要件に応じて実装してください")
+        return True
+        # raise NotImplementedError("要件に応じて実装してください")
 
     def is_200_status(self) -> bool:
         return self.http_status is HttpStatus.OK
