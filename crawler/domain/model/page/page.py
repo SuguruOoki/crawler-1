@@ -14,7 +14,7 @@ class Page:
     crawled_at: datetime
 
     def get_urls(self) -> URLSet:
-        return URLSet([URL.of(link, self.url) for link in self.html.urls()])
+        return URLSet(set(URL.of(link, self.url) for link in self.html.urls()))
 
     def is_target(self) -> bool:
         """
