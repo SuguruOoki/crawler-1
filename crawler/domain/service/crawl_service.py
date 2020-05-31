@@ -27,5 +27,15 @@ class CrawlService:
         urls = page.get_urls()
         self.url_repository.save(urls)
 
-        for url in urls.set:
-            self.recursive_crawl(url, i + 1, depth)
+        for other_url in urls.set:
+            self.recursive_crawl(other_url, i + 1, depth)
+
+    def pagination_crawl(self, url: URL, next_page_url_regex: str, detail_url_regex) -> None:
+        """
+        ページネーションクロール(Pagination Crawl)
+
+        一覧ページから詳細ページURLを保存して、次の一覧ページをクロールする
+
+        :return:
+        """
+        raise NotImplementedError("未実装です")
