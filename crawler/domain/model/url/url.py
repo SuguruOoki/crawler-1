@@ -1,14 +1,28 @@
-from datetime import datetime
+import re
+from urllib.parse import urlparse
 from dataclasses import dataclass
 
 
-@dataclass
+@dataclass(init=False, frozen=True)
 class URL:
-    url: str
-    crawled_at: datetime
+    absolute_path: str
 
-    def domain_is(self, domain: str) -> bool:
-        return True
+    def __init__(self, absolute_path: str):
+        assert self._is_absolute_path(absolute_path), \
+            "{}は絶対パスではありません。絶対パスを指定してください。".format(absolute_path)
+        super().__setattr__("absolute_path", absolute_path)
+
+    @staticmethod
+    def of(path: str, from_url):
+        if URL._is_absolute_path(path):
+            return URL(path)
+
+        _from = urlparse(from_url.absolute_path)
+        return URL(_from.scheme + "://" + _from.netloc + "/" + path)
 
     def match(self, regex: str) -> bool:
-        return True
+        return re.match(regex, self.absolute_path) is not None
+
+    @staticmethod
+    def _is_absolute_path(path: str) -> bool:
+        return re.match(r"^https?://[\w/:%#\$&\?\(\)~\.=\+\-]+", path) is not None

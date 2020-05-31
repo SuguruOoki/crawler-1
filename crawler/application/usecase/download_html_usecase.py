@@ -19,11 +19,14 @@ class DownloadHtmlUsecase:
         self._crawling(URL(seed_url))
 
         while self.url_repository.has_urls():
-            url = self.url_repository.get()
+            url = self.url_repository.get(timedelta(days=3))
             page = self.web_service.fetch(url)
 
             if self._should_page_save(page):
+                print("保存中 {} ...".format(page.url))
                 self.page_repository.save(page)
+                self.url_repository.crawled(url)
+                print("保存完了")
 
             self._crawling(url)
 
@@ -43,17 +46,20 @@ class DownloadHtmlUsecase:
         urls = page.get_urls()
         self.url_repository.save(urls)
 
-        for url in urls.set:
-            self._crawling(url, i + 1, depth)
+        for other_url in urls.set:
+            self._crawling(other_url, i + 1, depth)
 
     def _should_page_save(self, page: Page) -> bool:
         return (
             page.is_200_status() and
             page.is_target() and
-            (self._is_not_crawled(page) or self._has_times_passed_since_crawling(page))
+            (
+                self._page_has_not_be_crawled(page) or
+                self._has_times_passed_since_crawling(page, timedelta(days=3))
+            )
         )
 
-    def _is_not_crawled(self, page: Page) -> bool:
+    def _page_has_not_be_crawled(self, page: Page) -> bool:
         return not self.page_repository.is_exist(page)
 
     def _has_times_passed_since_crawling(self, page: Page, delta: timedelta) -> bool:

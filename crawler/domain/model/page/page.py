@@ -14,7 +14,7 @@ class Page:
     crawled_at: datetime
 
     def get_urls(self) -> URLSet:
-        return self.html.urls()
+        return URLSet([URL.of(link, self.url) for link in self.html.urls()])
 
     def is_target(self) -> bool:
         """
@@ -23,3 +23,6 @@ class Page:
         :return: bool
         """
         raise NotImplementedError("要件に応じて実装してください")
+
+    def is_200_status(self) -> bool:
+        return self.http_status is HttpStatus.OK

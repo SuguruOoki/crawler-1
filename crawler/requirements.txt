@@ -1,1 +1,3 @@
 requests
+pid  # 多重起動の防止用
+beautifulsoup4
