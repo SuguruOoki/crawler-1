@@ -11,6 +11,9 @@ class Html:
     character_code: CharacterCode
 
     def urls(self) -> Set[str]:
+        if self.text is None:
+            return set()
+
         urls = set()
         for link in BeautifulSoup(self.text, 'html.parser').find_all("a"):
             if link.get("href") is not None:
