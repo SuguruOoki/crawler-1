@@ -1,7 +1,6 @@
 import abc
 
-from ..model.page import Page
-from ..model.url import URL
+from ..model.page import Page, URL
 
 
 class WebService(abc.ABC):

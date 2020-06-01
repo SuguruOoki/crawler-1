@@ -9,7 +9,6 @@ from crawler.application.usecase import DownloadHtmlUsecase
 from crawler.batch import DownloadBatch
 from crawler.domain.service import CrawlService
 from crawler.infrastructure.service.web import SyncWebService
-from crawler.infrastructure.repository.url import InMemoryUrlRepository
 from crawler.infrastructure.repository.page import InMemoryPageRepository
 
 
@@ -18,14 +17,13 @@ BATCH_NAME = args[1]
 SEED_URL = args[2]
 
 web_service = SyncWebService()
-url_repository = InMemoryUrlRepository(datetime.timedelta(days=1))
+page_repository = InMemoryPageRepository(datetime.timedelta(days=1))
 
 DownloadBatch(
     DownloadHtmlUsecase(
-        CrawlService(web_service, url_repository),
+        CrawlService(web_service, page_repository),
         web_service,
-        url_repository,
-        InMemoryPageRepository(),
+        page_repository,
         datetime.timedelta(days=1)
     ),
     BATCH_NAME

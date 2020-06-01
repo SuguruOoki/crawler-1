@@ -1,5 +1,4 @@
-from ....domain.model.page import Page
-from ....domain.model.url import URL
+from ....domain.model.page import Page, URL
 from ....domain.service.web_service import WebService
 
 
