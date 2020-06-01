@@ -3,7 +3,7 @@ from urllib.parse import urlparse
 from dataclasses import dataclass
 
 
-@dataclass(init=False, frozen=True)
+@dataclass(init=False, unsafe_hash=True, frozen=True)
 class URL:
     absolute_path: str
 
@@ -26,6 +26,9 @@ class URL:
 
     def match(self, regex: str) -> bool:
         return re.match(regex, self.absolute_path) is not None
+
+    def should_be_crawled(self) -> bool:
+        raise NotImplementedError("要件に応じて実装してください")
 
     @staticmethod
     def _is_absolute_path(path: str) -> bool:

@@ -20,16 +20,17 @@ class CrawlService:
         :param depth:
         :return:
         """
+        page = self.web_service.fetch(url)
+        self.url_repository.save(url)
+
         if i > depth:
             return
 
-        page = self.web_service.fetch(url)
-        self.url_repository.save(url)
         urls = page.get_urls()
 
         for other_url in urls.set:
-            self.url_repository.save(other_url)
-            self.recursive_crawl(other_url, i + 1, depth)
+            if other_url.should_be_crawled():
+                self.recursive_crawl(other_url, i + 1, depth)
 
     def pagination_crawl(self, url: URL, next_page_url_regex: str, detail_url_regex) -> None:
         """
