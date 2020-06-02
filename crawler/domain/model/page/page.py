@@ -22,8 +22,7 @@ class Page:
         
         :return: bool
         """
-        return True
-        # raise NotImplementedError("要件に応じて実装してください")
+        raise NotImplementedError("要件に応じて実装してください")
 
     def is_200_status(self) -> bool:
         return self.http_status is HttpStatus.OK
