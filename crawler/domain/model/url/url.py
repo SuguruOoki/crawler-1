@@ -1,5 +1,5 @@
 import re
-from urllib.parse import urlparse
+from urllib.parse import urljoin
 from dataclasses import dataclass
 
 
@@ -21,8 +21,7 @@ class URL:
         if URL._is_absolute_path(path):
             return URL(path)
 
-        _from = urlparse(from_url.absolute_path)
-        return URL(_from.scheme + "://" + _from.netloc + "/" + path)
+        return URL(urljoin(from_url.absolute_path, path))
 
     def match(self, regex: str) -> bool:
         return re.match(regex, self.absolute_path) is not None
