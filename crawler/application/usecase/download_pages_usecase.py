@@ -1,7 +1,7 @@
 from typing import Set
 from tqdm import tqdm
 
-from crawler.domain.model.page import URL
+from crawler.domain.model.url import URL
 from crawler.domain.repository import PageRepository
 from crawler.domain.service import WebService
 

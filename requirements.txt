@@ -1,2 +1,6 @@
 lxml
 cssselect
+pid~=3.0.3
+beautifulsoup4~=4.6.3
+tqdm~=4.26.0
+requests~=2.21.0
