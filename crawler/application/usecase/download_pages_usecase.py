@@ -14,7 +14,7 @@ class DownloadPagesUsecase:
 
     def download(self, urls: Set[str]) -> None:
         """
-        単一のURLページをダウンロードする.
+        複数のURLページをダウンロードする.
 
         :param url:
         :return:
