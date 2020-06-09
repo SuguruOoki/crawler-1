@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 @dataclass(init=False, unsafe_hash=True, frozen=True)
 class URL:
-    absolute_path: str
+    absolute_url: str
 
     def __init__(self, absolute_path: str):
         assert absolute_path is not None, \
@@ -21,10 +21,10 @@ class URL:
         if URL._is_absolute_path(path):
             return URL(path)
 
-        return URL(urljoin(from_url.absolute_path, path))
+        return URL(urljoin(from_url.absolute_url, path))
 
     def match(self, regex: str) -> bool:
-        return re.match(regex, self.absolute_path) is not None
+        return re.match(regex, self.absolute_url) is not None
 
     def should_be_crawled(self) -> bool:
         raise NotImplementedError("要件に応じて実装してください")

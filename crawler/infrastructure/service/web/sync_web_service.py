@@ -10,7 +10,7 @@ from ....domain.service.web_service import WebService
 class SyncWebService(WebService):
 
     def fetch(self, url: URL) -> Page:
-        response = requests.get(url.absolute_path)
+        response = requests.get(url.absolute_url)
 
         return Page(
             url,
